@@ -1,7 +1,9 @@
 const http = require('http');
-
+const fs = require('fs')
 const server = http.createServer((req, res) => {
     // console.log(req.url, req.method,req.headers);
+    
+    /* Chuyển hướng đến /message */
     const url = req.url;
     if (url === '/') {
         res.write('<html>');
@@ -12,6 +14,15 @@ const server = http.createServer((req, res) => {
       }
     /* Thoát khỏi server */
     // process.exit(); 
+
+    /* Chuyển hướng từ /message về trang chủ / */
+    const method = req.method
+    if (url === '/message' && method === 'POST') {
+        fs.writeFileSync('message.txt', 'DUMMY')
+        res.statusCode = 302
+        res.setHeader('location', '/');
+        return res.end()
+    }
 
     // Cách cài đặt response trên máy chủ trả về dữ liệu có dạng html
     res.setHeader('Content-Type', 'text/html');
