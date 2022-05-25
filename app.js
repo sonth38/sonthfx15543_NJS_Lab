@@ -9,11 +9,15 @@ app.use((req, res, next)=>{
     next()
 })
 
-app.use((req, res, next)=>{
-    console.log('In the another middleware')
-    res.send('<h1> Hello from Express.js</h1>')
+app.use('/add-product',(req, res, next)=>{
+    console.log('In the another middleware 1')
+    res.send('<h1>The Add product page</h1>')
 })
 
-const server = http.createServer(app);
+app.use('/',(req, res, next)=>{
+    console.log('In the another middleware 2')
+    res.send('<h1>Hello from Express.js</h1>')
+})
 
-server.listen(3000) /* khởi chạy server port 3000 hoặc port bất kì */
+
+app.listen(3000);
