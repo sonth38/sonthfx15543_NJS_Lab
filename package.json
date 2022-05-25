@@ -1,0 +1,23 @@
+{
+  "name": "lab1.1",
+  "version": "1.0.0",
+  "description": "complete NodeJs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sonth38/sonthfx15543_NJS_Lab.git"
+  },
+  "author": "Son Ta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sonth38/sonthfx15543_NJS_Lab/issues"
+  },
+  "homepage": "https://github.com/sonth38/sonthfx15543_NJS_Lab#readme",
+  "dependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
