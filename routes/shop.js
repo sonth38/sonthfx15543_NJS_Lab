@@ -10,7 +10,13 @@ const adminData = require('./admin')
 
 router.get('/',(req, res, next)=>{
     const product = adminData.product
-    res.render('shop', {prods:product, pageTitle: 'Shop', path: '/', hasProduct: product.length >0})
+    res.render('shop', {prods:product,
+        pageTitle: 'Shop',
+        path: '/',
+        hasProduct: product.length >0,
+        productCSS: true,
+        activeShop: true
+    })
 })
 
 module.exports = router
