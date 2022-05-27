@@ -9,7 +9,7 @@ const router = express.Router()
 const product = []
 
 router.get('/add-product',(req, res, next)=>{
-    res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
+    res.render('add-product', { pageTitle: ' Add Product'})
 })
 router.post('/product',(req, res)=>{
     product.push({title:req.body.title})
