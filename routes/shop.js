@@ -9,7 +9,8 @@ const router = express.Router()
 const adminData = require('./admin')
 
 router.get('/',(req, res, next)=>{
-    res.render('shop')
+    const product = adminData.product
+    res.render('shop', {prods:product, docTitle: 'Shop'})
 })
 
 module.exports = router
