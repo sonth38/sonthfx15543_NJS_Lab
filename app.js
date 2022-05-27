@@ -4,14 +4,11 @@ const http = require('http');
 
 const express = require('express')
 
-const expressHbs = require('express-handlebars')
-
 const bodyParser = require('body-parser')
 
 const app = express()
 
-app.engine('hbs', expressHbs({layoutsDir: 'views/layouts', defaultLayout: 'main-layout.hbs'}))
-app.set('view engine', 'hbs')
+app.set('view engine', 'ejs')
 app.set('views', 'views')
 
 const adminData = require('./routes/admin')
