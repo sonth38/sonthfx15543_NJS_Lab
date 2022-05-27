@@ -4,11 +4,14 @@ const http = require('http');
 
 const express = require('express')
 
+const expressHbs = require('express-handlebars')
+
 const bodyParser = require('body-parser')
 
 const app = express()
 
-app.set('view engine', 'pug')
+app.engine('hbs', expressHbs())
+app.set('view engine', 'hbs')
 app.set('views', 'views')
 
 const adminData = require('./routes/admin')
