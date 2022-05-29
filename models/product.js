@@ -7,10 +7,10 @@ module.exports = class Product {
     }
 
     save() {
-        const p = path.join(path.dirname(
-            process.mainModule.filename),
+        const p = path.join(
+            path.dirname(require.main.filename),
             'data',
-            product.json
+            'product.json'
         )
 
         fs.readFile(p, (err, fileContent) => {
@@ -25,18 +25,18 @@ module.exports = class Product {
         })
     }
 
-    static fetchAll() {
-        const p = path.join(path.dirname(
-            require.main.filename),
+    static fetchAll(cb) {
+        const p = path.join(
+            path.dirname(require.main.filename),
             'data',
-            product.json
+            'product.json'
         )
 
         fs.readFile(p, (err, fileContent) => {
             if (err) {
-                return []
+                cb([])
             }
-            return JSON.parse(fileContent)
+            cb(JSON.parse(fileContent))
         })
     }
 }
