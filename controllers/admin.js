@@ -3,7 +3,8 @@ const Product = require('../models/product');
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
-    path: '/admin/add-product'
+    path: '/admin/add-product',
+    editing: false
   });
 };
 
@@ -18,16 +19,23 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getEditProduct = (req, res, next) => {
-  const editMode = req.query.edit; /* Thêm tham số vào truy vấn, trả về true, false  */
+  const editMode = req.query.edit; /* Lấy tham số edit trên URL, trả về true, false  */
   if (!editMode) {
     res.redirect('/')
   }
-
-  res.render('admin/edit-product', {
-    pageTitle: 'Edit Product',
-    path: '/admin/add-product',
-    editing: editMode
-  });
+  const prodId = req.params.productId /* Lấy được productId trên URL */
+  Product.findById(prodId, product => {
+    console.log(product)
+    if (!product) {
+      res.redirect('/')
+    }
+    res.render('admin/edit-product', {
+      pageTitle: 'Edit Product',
+      path: '/admin/add-product',
+      editing: editMode,
+      product: product
+    });
+  })
 };
 
 exports.getProducts = (req, res, next) => {
