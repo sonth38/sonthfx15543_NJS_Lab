@@ -26,6 +26,8 @@ module.exports = class Carts {
             if (existingProduct) {
                 updateProduct = {...existingProduct}
                 updateProduct.qty = updateProduct.qty + 1;
+                cart.products = [...cart.products];
+                cart.products[existingProductIndex] = updateProduct;
             } else {
                 updateProduct = { id: id, qty: 1}
                 cart.products = [...cart.products, updateProduct]
@@ -50,6 +52,17 @@ module.exports = class Carts {
             fs.writeFile(p, JSON.stringify(updateCart), err => {
                 console.log(err)
             })
+        })
+    }
+
+    static getCart (cb) {
+        fs.readFile(p, (err, fileContent) => {
+            if (err) {
+                cb(null);
+            } else {
+                const cart = JSON.parse(fileContent)
+                cb(cart);
+            }
         })
     }
 }
