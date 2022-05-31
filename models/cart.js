@@ -36,4 +36,20 @@ module.exports = class Carts {
             })
         })
     }
+
+    static deleteProduct(id, productPrice) {
+        fs.readFile(p, (err, fileContent) =>{
+            if (err) {
+                return
+            }
+            const updateCart = { ... fileContent}
+            const product = updateCart.products.find(prod => prod.id === id) // Lấy ra product có ID cần delete
+            const productQty = product.qty                                      // Lấy ra số lượng của product cần delete
+            updateCart.products = updateCart.products(prod => prod.id !== id)   // Cập nhật lại product trong Cart
+            updateCart.totalPrice = updateCart.totalPrice - productQty*productPrice
+            fs.writeFile(p, JSON.stringify(updateCart), err => {
+                console.log(err)
+            })
+        })
+    }
 }
