@@ -1,6 +1,6 @@
-const Sequelize = require('sequelize')
+const Sequelize = require('sequelize');
 
-const sequelize = require('../util/database')
+const sequelize = require('../util/database');
 
 const Product = sequelize.define('product', {
   id: {
@@ -14,7 +14,7 @@ const Product = sequelize.define('product', {
     type: Sequelize.DOUBLE,
     allowNull: false
   },
-  imagaUrl: {
+  imageUrl: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -24,4 +24,4 @@ const Product = sequelize.define('product', {
   }
 });
 
-module.exports = Product
+module.exports = Product;
