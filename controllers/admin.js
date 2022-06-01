@@ -20,7 +20,10 @@ exports.postAddProduct = (req, res, next) => {
       price: price,
       description: description
     })
-    .then(result => console.log(result))
+    .then(result => {
+      console.log(result)
+      res.redirect('/products')
+    })
     .catch(err => console.log(err))
 
 };
@@ -31,18 +34,19 @@ exports.getEditProduct = (req, res, next) => {
     res.redirect('/')
   }
   const prodId = req.params.productId /* Lấy được productId trên URL */
-  Product.findById(prodId, product => {
-    console.log(product)
-    if (!product) {
-      res.redirect('/')
-    }
-    res.render('admin/edit-product', {
-      pageTitle: 'Edit Product',
-      path: '/admin/add-product',
-      editing: editMode,
-      product: product
-    });
-  })
+  Product.findByPk(prodId)
+    .then(product => {
+        if (!product) {
+          res.redirect('/')
+        }
+        res.render('admin/edit-product', {
+          pageTitle: 'Edit Product',
+          path: '/admin/add-product',
+          editing: editMode,
+          product: product
+        });
+    })
+    .catch(err => console.log(err))
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -51,9 +55,20 @@ exports.postEditProduct = (req, res, next) => {
   const updateImageUrl = req.body.imageUrl
   const updatePrice = req.body.price
   const updateDesc = req.body.description
-  const updateProduct = new Product(prodId, updateTitle, updateImageUrl, updateDesc, updatePrice)
-  updateProduct.save()
-  res.redirect('/admin/products')
+  console.log(updatePrice)
+  Product.findByPk(prodId)
+    .then(product => {
+      product.title = updateTitle,
+      product.imageUrl = updateImageUrl,
+      product.price = updatePrice,
+      product.description = updateDesc
+      return product.save()
+    })
+    .then(result => {
+      console.log(result)
+      res.redirect('/products')
+    })
+    .catch(err => console.log(err))
 }
 
 exports.postDeleteProduct = (req, res, next) => {
