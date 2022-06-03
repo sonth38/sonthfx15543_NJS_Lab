@@ -26,14 +26,14 @@ exports.postAddProduct = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
-
+/*
 exports.getEditProduct = (req, res, next) => {
   const editMode =
-    req.query.edit; /* Lấy tham số edit trên URL, trả về true, false  */
+    req.query.edit; // Lấy tham số edit trên URL, trả về true, false
   if (!editMode) {
     res.redirect("/");
   }
-  const prodId = req.params.productId; /* Lấy được productId trên URL */
+  const prodId = req.params.productId; // Lấy được productId trên URL
   req.user
     .getProducts({ where: { id: prodId } })
     // Product.findByPk(prodId)
@@ -100,3 +100,4 @@ exports.getProducts = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+*/
