@@ -21,7 +21,7 @@ exports.postAddProduct = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
-/*
+
 exports.getEditProduct = (req, res, next) => {
   const editMode =
     req.query.edit; // Lấy tham số edit trên URL, trả về true, false
@@ -29,11 +29,8 @@ exports.getEditProduct = (req, res, next) => {
     res.redirect("/");
   }
   const prodId = req.params.productId; // Lấy được productId trên URL
-  req.user
-    .getProducts({ where: { id: prodId } })
-    // Product.findByPk(prodId)
-    .then((products) => {
-      const product = products[0];
+  Product.findById(prodId)
+    .then((product) => {
       if (!product) {
         res.redirect("/");
       }
@@ -68,7 +65,7 @@ exports.postEditProduct = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
-
+/*
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findByPk(prodId)
