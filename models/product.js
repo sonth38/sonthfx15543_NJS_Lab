@@ -1,4 +1,4 @@
-const MongoDb = require("mongodb");
+const mongodb = require("mongodb");
 const getDb = require("../util/database").getDb;
 
 class Product {
@@ -14,16 +14,15 @@ class Product {
     const db = getDb();
     let dbOp;
     if (this._id) {
-      dbOp = db.collection("products").updateOne({ _id: new MongoDb.ObjectId(prodId) }, {$set: this})
-    } else {
-      return (dbOp = db
+      dbOp = db
         .collection("products")
-        .insertOne(this)
-        .then(result => console.log("save Product", result))
-        .catch(err => console.log(err)));
+        .updateOne({ _id: new mongodb.ObjectId(this._id) }, { $set: this });
+    } else {
+      dbOp = db.collection("products").insertOne(this);
     }
-
-    return;
+    return dbOp
+      .then(result => console.log("save Product", result))
+      .catch(err => console.log(err));
   }
 
   static fetchAll() {
@@ -43,7 +42,7 @@ class Product {
     const db = getDb();
     return db
       .collection("products")
-      .find({ _id: new MongoDb.ObjectId(prodId) })
+      .find({ _id: new mongodb.ObjectId(prodId) })
       .next()
       .then(product => {
         console.log("fetchAll Product", product);
