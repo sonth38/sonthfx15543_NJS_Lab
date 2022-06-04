@@ -86,10 +86,14 @@ exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findById(prodId)
     .then(product => {
-      console.log("Product nhận được",product)
-      return req.user.addToCart(product)
+      console.log("Product nhận được", product);
+      return req.user.addToCart(product);
     })
-    .then(result => console.log(result))
+    .then(result => {
+      console.log(result);
+      res.redirect("/products");
+
+    })
     .catch(err => console.log(err));
   // console.log("ProductID thêm", prodId);
   // let fetchedCart;
