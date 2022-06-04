@@ -33,7 +33,7 @@ class Product {
       .find()
       .toArray()
       .then(product => {
-        console.log("fetchAll Product", product);
+        // console.log("fetchAll Product", product);
         return product;
       })
       .catch(err => console.log(err));
@@ -46,7 +46,7 @@ class Product {
       .find({ _id: new mongodb.ObjectId(prodId) })
       .next()
       .then(product => {
-        console.log("fetchAll Product", product);
+        // console.log("fetchAll Product", product);
         return product;
       })
       .catch(err => console.log(err));
