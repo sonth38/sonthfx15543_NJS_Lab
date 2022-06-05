@@ -14,11 +14,13 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  imgageUrl: {
+  imageUrl: {
     type: String,
     required: true
   }
 })
+
+module.exports = mongoose.model('Product',productSchema)
 
 
 // Phần sử dụng mongoDB
