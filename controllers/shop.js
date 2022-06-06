@@ -66,7 +66,7 @@ exports.postCart = (req, res, next) => {
   Product.findById(prodId)
     .then(product => {
       console.log("Product nhận được", product);
-      return req.user.addToCart(product);
+      return req.user.addCart(product);
     })
     .then(result => {
       console.log(result);
