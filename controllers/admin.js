@@ -84,7 +84,10 @@ exports.postDeleteProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+  // .select( 'title price -_id')     // Cách để lấy trường
+  // .populate('userId', 'name')      // Cách lấy thêm thông tin chi tiết của trường
     .then(products => {
+      console.log('Product  nhận được', products)
       res.render("admin/products", {
         prods: products,
         pageTitle: "Admin Products",
