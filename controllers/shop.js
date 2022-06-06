@@ -54,7 +54,7 @@ exports.getCart = (req, res, next) => {
     .populate(['cart.items.productId'])
     .then(user => {
       const products = user.cart.items
-      console.log(products)
+      // console.log(products)
       res.render("shop/cart", {
         path: "/cart",
         pageTitle: "Your Cart",
@@ -68,7 +68,7 @@ exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findById(prodId)
     .then(product => {
-      console.log("Product nhận được", product);
+      // console.log("Product nhận được", product);
       return req.user.addCart(product);
     })
     .then(result => {
@@ -81,10 +81,11 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
+  console.log('id xóa',prodId)
   req.user
-    .deleteItemFormCart(prodId)
+    .removeFromCart(prodId)
     .then(result => {
-      res.redirect("/cart");
+      res.redirect('/cart');
     })
     .catch(err => console.log(err));
 };
