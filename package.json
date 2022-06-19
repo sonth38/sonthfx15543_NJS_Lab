@@ -1,11 +1,11 @@
 {
-  "name": "nodejs-complete-guide",
+  "name": "asm1-njs-sonta",
   "version": "1.0.0",
   "description": "Complete Node.js Guide",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
+    "start": "nodemon --inspect app.js",
     "start-server": "node app.js"
   },
   "author": "Maximilian Schwarzmüller",
@@ -23,5 +23,13 @@
     "mysql2": "^2.3.3",
     "pug": "^2.0.3",
     "sequelize": "^6.20.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sonth38/sonthfx15543_NJS_Lab.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sonth38/sonthfx15543_NJS_Lab/issues"
+  },
+  "homepage": "https://github.com/sonth38/sonthfx15543_NJS_Lab#readme"
 }
