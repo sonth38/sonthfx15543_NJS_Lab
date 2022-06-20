@@ -43,21 +43,21 @@ exports.postSignup = (req, res, next) => {
   const confirmPassword = req.body.confirmPassword;
   User.findOne({ email: email })
     .then(userDoc => {
-        if (userDoc) {
-            return res.redirect('/signup')
-        }
-        return bcrypt.hash(password, 12)
-    })
-    .then(hashPassword => {
+      if (userDoc) {
+        return res.redirect('/signup');
+      }
+      return bcrypt.hash(password, 12).then(hashPassword => {
         const user = new User({
-            email: email,
-            password: hashPassword,
-            cart: { item: [] }
-        })
-        return user.save()
+          email: email,
+          password: hashPassword,
+          cart: { item: [] },
+        });
+        return user.save();
+      });
     })
+
     .then(result => {
-        res.redirect('/login')
+      res.redirect('/login');
     })
     .catch(err => console.log(err));
 };
