@@ -38,6 +38,7 @@ app.use(
   session({ secret: 'my secret', resave: false, saveUninitialized: false, store: store })
 );
 
+// Sử dụng 1 middleware user để gửi req.user sang middleware phía sau
 app.use((req, res, next) => {
 	if (!req.session.user) {
 		return next()
