@@ -9,6 +9,9 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 // CSRF
 const csrf = require('csurf');
 
+// flash thông báo
+const flash = require('connect-flash')
+
 const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
@@ -49,6 +52,7 @@ app.use(
 );
 
 app.use(csrfProtection);
+app.use(flash())
 
 // Sử dụng 1 middleware user để gửi req.user sang middleware phía sau
 app.use((req, res, next) => {
