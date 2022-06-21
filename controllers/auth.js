@@ -34,6 +34,7 @@ exports.postLogin = (req, res, next) => {
             res.redirect('/');
           });
         }
+		req.flash('error', 'Invalid email or password.')
         res.redirect('/login');
       });
     })
@@ -48,11 +49,18 @@ exports.postLogout = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
-  res.render('auth/signup', {
-    pageTitle: 'Signup',
-    path: '/signup',
-    isAuthenticated: false,
-  });
+	let message = req.flash('error')
+	if (message.length > 0) {
+		message = message
+	} else {
+		message = null
+	}
+	res.render('auth/signup', {
+		pageTitle: 'Signup',
+		path: '/signup',
+		isAuthenticated: false,
+		errorMessage: message
+	});
 };
 
 exports.postSignup = (req, res, next) => {
@@ -62,6 +70,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
     .then(userDoc => {
       if (userDoc) {
+		req.flash('error', 'E-Mail exists already, please pick a different one.')
         return res.redirect('/signup');
       }
       return bcrypt.hash(password, 12).then(hashPassword => {
