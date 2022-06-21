@@ -7,12 +7,12 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 // CSRF
-const csrf = require('csurf')
+const csrf = require('csurf');
 
 const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
-// const mongoConnect = require("./util/database").mongoConnect;
+
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
@@ -22,7 +22,6 @@ const User = require('./models/user');
 const MONGODB_URI =
   'mongodb+srv://root:3893@cluster0.oiywn.mongodb.net/shop?retryWrites=true&w=majority';
 
-
 const app = express();
 
 // Thiết lập lưu trữ session trong mongoDb
@@ -31,7 +30,7 @@ const store = new MongoDBStore({
   collection: 'sessions',
 });
 
-const csrfProtection = csrf()
+const csrfProtection = csrf();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -49,7 +48,7 @@ app.use(
   })
 );
 
-app.use(csrfProtection)
+app.use(csrfProtection);
 
 // Sử dụng 1 middleware user để gửi req.user sang middleware phía sau
 app.use((req, res, next) => {
@@ -62,6 +61,13 @@ app.use((req, res, next) => {
       next();
     })
     .catch(err => console.log(err));
+});
+
+// Truyền scrf cho các routes, view
+app.use((req, res, next) => {
+	res.locals.isAuthenticated = req.session.isLoggedIn,
+	res.locals.csrfToken = req.csrfToken()
+	next()
 });
 
 app.use('/admin', adminRoutes);
