@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
+// CSRF
+const csrf = require('csurf')
+
 const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
@@ -19,6 +22,7 @@ const User = require('./models/user');
 const MONGODB_URI =
   'mongodb+srv://root:3893@cluster0.oiywn.mongodb.net/shop?retryWrites=true&w=majority';
 
+
 const app = express();
 
 // Thiết lập lưu trữ session trong mongoDb
@@ -26,6 +30,8 @@ const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: 'sessions',
 });
+
+const csrfProtection = csrf()
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -42,6 +48,8 @@ app.use(
     store: store,
   })
 );
+
+app.use(csrfProtection)
 
 // Sử dụng 1 middleware user để gửi req.user sang middleware phía sau
 app.use((req, res, next) => {
