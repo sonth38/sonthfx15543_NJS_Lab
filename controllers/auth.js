@@ -106,20 +106,21 @@ exports.postSignup = (req, res, next) => {
           cart: { item: [] },
         });
         return user.save();
-      });
+      })
+      .then(result => {
+        res.redirect('/login');
+          return transporter
+            .sendMail({
+              to: email,
+              from: 'sontahvac@gmail.com',
+              subject: 'Signup Succeeded',
+              html: '<h1>You successfully signed up</h1>',
+            })
+          })
+      .catch(err => console.log(err));
+
     })
 
-    .then(result => {
-      res.redirect('/login');
-        return transporter
-          .sendMail({
-            to: email,
-            from: 'sontahvac@gmail.com',
-            subject: 'Signup Succeeded',
-            html: '<h1>You successfully signed up</h1>',
-          })
-          .catch(err => console.log(err));
-    })
     .catch(err => console.log(err));
 };
 
