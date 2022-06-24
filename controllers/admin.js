@@ -53,7 +53,7 @@ exports.postAddProduct = (req, res, next) => {
     .save()
     .then(result => {
       console.log('Created Product');
-      res.redirect('/products');
+      res.redirect('/admin/products');
     })
     .catch(err => {
       // return res.status(500).render('admin/edit-product', {
@@ -70,20 +70,23 @@ exports.postAddProduct = (req, res, next) => {
       //   },
       //   validationErrors: []
       // });
-      res.redirect('/500')
+      // res.redirect('/500')
+      const error = new Error(err)
+      error.httpStatusCode = 500
+      return next(error)
     });
 };
 
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit; // Lấy tham số edit trên URL, trả về true, false
   if (!editMode) {
-    res.redirect('/');
+    return res.redirect('/');
   }
   const prodId = req.params.productId; // Lấy được productId trên URL
   Product.findById(prodId)
     .then(product => {
       if (!product) {
-        res.redirect('/');
+        return res.redirect('/');
       }
       res.render('admin/edit-product', {
         pageTitle: 'Edit Product',
@@ -95,7 +98,11 @@ exports.getEditProduct = (req, res, next) => {
         validationErrors: []
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postEditProduct = (req, res, next) => {
