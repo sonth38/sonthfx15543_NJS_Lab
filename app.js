@@ -59,6 +59,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ storage: storage, fileFilter: fileFilter }).single('image'))
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/image', express.static(path.join(__dirname, 'image')));
 
 // Sử dụng middleware session
 app.use(
