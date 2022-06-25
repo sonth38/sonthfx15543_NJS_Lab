@@ -27,14 +27,14 @@ const store = new MongoDBStore({
 const csrfProtection = csrf();
 
 // Cấu hình nhận file
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'image')
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'image');
   },
-  filename: (req, file, cb) => {
-    cb(null, new Date().toISOString()+ '-' + file.originalname)
-  }
-})
+  filename: function(req, file, cb) {
+    cb(null, Date.now()+ '-' + file.originalname);
+  },
+});
 
 const fileFilter = (req, file, cb) => {
   if (
@@ -56,7 +56,7 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
+app.use(multer({ storage: storage, fileFilter: fileFilter }).single('image'))
 
 app.use(express.static(path.join(__dirname, 'public')));
 
