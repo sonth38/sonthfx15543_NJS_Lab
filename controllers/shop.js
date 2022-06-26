@@ -192,9 +192,18 @@ exports.getInvoice = (req, res, next) => {
         'inline; filename="' + invoiceName + '"'
       );
       pdfDoc.pipe(fs.createWriteStream(invoicePath))
-      pdfDoc.pipre(res)
+      pdfDoc.pipe(res)
 
-      pdfDoc.text('Hello World!')
+      pdfDoc.fontSize(26).text('Invoice',{
+        align:'justify'
+      })
+      let totalPrice = 0
+      order.products.forEach(prod => {
+        totalPrice += prod.quantity * prod.product.price
+        pdfDoc.text(prod.product.title + ' - ' + prod.quantity + ' x ' + '$' + prod.product.price)
+        pdfDoc.text('Total Price: ' + '$' + totalPrice)
+      })
+
       pdfDoc.end()
 
       // Sử dụng đọc file đối với các tệp dữ liệu nhỏ
