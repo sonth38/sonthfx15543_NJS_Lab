@@ -1,9 +1,10 @@
-const Product = require('../models/product');
-const user = require('../models/user');
-const Order = require('../models/order');
 const path = require('path');
 const fs = require('fs');
 const PDFDOCUMENT = require('pdfkit')
+
+const Product = require('../models/product');
+const user = require('../models/user');
+const Order = require('../models/order');
 
 exports.getProducts = (req, res, next) => {
   Product.find()
