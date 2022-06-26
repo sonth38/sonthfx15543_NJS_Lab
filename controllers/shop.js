@@ -3,6 +3,7 @@ const user = require('../models/user');
 const Order = require('../models/order');
 const path = require('path');
 const fs = require('fs');
+const PDFDOCUMENT = require('pdfkit')
 
 exports.getProducts = (req, res, next) => {
   Product.find()
@@ -183,6 +184,19 @@ exports.getInvoice = (req, res, next) => {
       console.log(invoiceName);
       const invoicePath = path.join('data', 'invoice', invoiceName);
       
+      // Sử dụng pdfKit để tạo file pdf
+      const pdfDoc = new PDFDOCUMENT()
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader(
+        'Content-Disposition',
+        'inline; filename="' + invoiceName + '"'
+      );
+      pdfDoc.pipe(fs.createWriteStream(invoicePath))
+      pdfDoc.pipre(res)
+
+      pdfDoc.text('Hello World!')
+      pdfDoc.end()
+
       // Sử dụng đọc file đối với các tệp dữ liệu nhỏ
       // fs.readFile(invoicePath, (err, data) => {
       //   if (err) {
@@ -197,13 +211,13 @@ exports.getInvoice = (req, res, next) => {
       // });
 
       // Sử dụng truyền stream với các tệp dữ liệu lớn
-      const file = fs.createReadStream(invoicePath)
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader(
-        'Content-Disposition',
-        'inline; filename="' + invoiceName + '"'
-      );
-      file.pipe(res)
+      // const file = fs.createReadStream(invoicePath)
+      // res.setHeader('Content-Type', 'application/pdf');
+      // res.setHeader(
+      //   'Content-Disposition',
+      //   'inline; filename="' + invoiceName + '"'
+      // );
+      // file.pipe(res)
     })
     .catch(err => next(err));
 };
